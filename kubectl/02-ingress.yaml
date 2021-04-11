@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: carlatino.com
+      http:
+        paths:
+          - backend:
+              serviceName: carlatino-svc
+              servicePort: 80

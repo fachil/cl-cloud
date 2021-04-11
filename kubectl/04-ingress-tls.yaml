@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+        - carlatino.com
+      secretName: carlatino-tls
+  rules:
+    - host: carlatino.com
+      http:
+        paths:
+          - backend:
+              serviceName: carlatino-svc
+              servicePort: 80

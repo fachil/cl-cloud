@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carlatino-app
+  labels:
+    app: carlatino-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: carlatino-app
+  template:
+    metadata:
+      labels:
+        app: carlatino-app
+    spec:
+      containers:
+        - name: carlatino-app
+          image: gcr.io/google-samples/hello-app:1.0
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carlatino-svc
+  labels:
+    app: carlatino-app
+spec:
+  selector:
+    app: carlatino-app
+  ports:
+    - protocol: TCP
+      name: https
+      port: 80
+      targetPort: 8080
